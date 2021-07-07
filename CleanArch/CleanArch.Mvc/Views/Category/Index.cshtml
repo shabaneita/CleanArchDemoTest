@@ -1,0 +1,87 @@
+﻿@model CleanArch.Application.ViewModels.CategoryViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+@*<div class="container body-content">
+        <div class="row category-content">
+            @foreach (var category in Model.Categories)
+            {
+                <div class="category-image-container ">
+                    <div class="category-image" style="background-image:url(@category.Image)">
+                    </div>
+                </div>
+                <h2>@category.Name</h2>
+                <h3>@category.Content</h3>
+                <h4>@category.Products</h4>
+
+            }
+        </div>
+    </div>*@
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:200px">
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var item in Model.Categories)
+        {
+            <tr>
+                <td style="width:200px">
+                    @*<img width="80" height="80" src="~/images/@item.Image" class="rounded-circle" alt="">*@
+                    <div class="category-image" style="background-image:url(@item.Image)">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    <a asp-action="/home">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>|
+                    <a asp-controller="products" asp-action="ProCat" asp-route-id="@item.CategoryId">All Product In This Category </a>|
+
+                    @* Categories/Details/3
+                        //https://localhost:44301/Products/ProCat/4*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section DataTableSection{
+
+    <script>$(function () {
+            $('.js-basic-example').DataTable({
+                responsive: true,
+                paging: true,
+                pageLength: 10,
+                bSort: true,
+                bFilter: true,
+                bLengthChange: false,
+                bInfo: false,
+                lengthMenu: [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "All"]],
+
+            });
+        });</script>
+}
