@@ -25,7 +25,6 @@ namespace CleanArch.API.Controllers
         }
 
         [HttpPost]
-
         public ActionResult Post([FromBody] CategoryViewModel categoryviewmodel)
         {
             _categoryService.Create(categoryviewmodel);

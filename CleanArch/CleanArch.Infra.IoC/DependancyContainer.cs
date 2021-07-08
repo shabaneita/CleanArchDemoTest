@@ -28,6 +28,10 @@ namespace CleanArch.Infra.IoC
 
             //Domain Handeler
             services.AddScoped<IRequestHandler<CreateCategoryCommand, bool>, CategoryCommadHandeler>();
+
+            services.AddScoped<IRequestHandler<UpdateCategoryCommand, bool>,UpdateCategoryCommandHandeler> ();
+            services.AddScoped<IRequestHandler<DeleteCategoryCommand, bool>, DeleteCategoryCommandHandeler> ();
+
             services.AddScoped<IRequestHandler<CreateProductCommand, bool>, ProductCommadHandeler>();
 
 

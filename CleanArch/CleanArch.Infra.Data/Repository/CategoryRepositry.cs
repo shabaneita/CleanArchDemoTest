@@ -32,5 +32,18 @@ namespace CleanArch.Infra.Data.Repository
         {
             return _ctx.Categories.FirstOrDefault(x => x.CategoryId == id);
         }
+
+        public void update(Category category)
+        {
+            _ctx.Categories.Update(category);
+            _ctx.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var category = _ctx.Categories.FirstOrDefault(x=>x.CategoryId==id);
+            _ctx.Categories.Remove(category);
+            _ctx.SaveChanges();
+        }
     }
 }

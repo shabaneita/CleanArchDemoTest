@@ -13,5 +13,9 @@ namespace CleanArch.Domain.Interfaces
         //
         public Category GetDetails(int id);
         void Add(Category category);
+
+        void update(Category category);
+
+        void Delete(int id);
     }
 }

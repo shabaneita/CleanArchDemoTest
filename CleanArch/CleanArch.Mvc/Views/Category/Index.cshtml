@@ -22,7 +22,9 @@
         </div>
     </div>*@
 
-
+<p>
+    <a asp-action="Create">Create New </a>
+</p>
 
 <table class="table">
     <thead>
@@ -46,8 +48,8 @@
             <tr>
                 <td style="width:200px">
                     @*<img width="80" height="80" src="~/images/@item.Image" class="rounded-circle" alt="">*@
-                    <div class="category-image" style="background-image:url(@item.Image)">
-                </td>
+                    <div class="category-image" style="background-image:url('/images/@item.Image')"></div>
+</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
