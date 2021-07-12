@@ -1,8 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+
+<form asp-action="AddDocument" asp-controller="Home" method="post" enctype="multipart/form-data" class="dropzone dz-clickable form-horizontal form-bordered" id="dropzoneForm">
+    <div class="form-group form-actions">
+        <div class="col-md-9 col-md-offset-4">
+            <button type="submit" id="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Upload</button>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts
+{
+    <link rel="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+    <script>
+        function myParamName() {
+            return "DocumentPhotos";
+        }
+        Dropzone.options.dropzoneForm = {
+            autoProcessQueue: false,
+            paramName: myParamName, // The name that will be used to transfer the file
+            uploadMultiple: true,
+            parallelUploads: 100,
+            init: function () {
+                console.log("active");
+                var wrapperThis = this;
+
+                $("#submit").click(function (e) {
+                    e.preventDefault();
+                    wrapperThis.processQueue();
+                });
+            },
+            accept: function (file, done) {
+                done();
+            }
+        };
+
+    </script>
+}
+
