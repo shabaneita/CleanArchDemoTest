@@ -1,6 +1,7 @@
 ﻿using CleanArch.Mvc.Models;
 using Grpc.Core;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,11 +17,12 @@ namespace CleanArch.Mvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _hostEnvironment;
-
-        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment)
+        private IHostingEnvironment _environment;
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment, IHostingEnvironment environment)
         {
             _logger = logger;
             _hostEnvironment = hostEnvironment;
+            _environment = environment;
         }
 
         public IActionResult Index()
@@ -39,57 +41,109 @@ namespace CleanArch.Mvc.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        #region DropZone
-        /*
 
-            public ActionResult uploade()
+        public IActionResult Upload()
+        {
+            return View();
+        }
 
+
+        [HttpPost]
+        public async Task<IActionResult> AddDocument(IEnumerable<IFormFile> DocumentPhotos)
+        {
+
+            if (DocumentPhotos!= null)
             {
-                bool isSavedSuccessfully = true;
-                string fname = "";
-                try
+              
+                
+                foreach (var item in DocumentPhotos)
                 {
-                    foreach (string filename in Request.Files)
-                    {
-                        HttpPostedFileBase file = Request.Files[filename];
-                        fname = file.FileName;
-                        if (file != null && file.ContentLength > 0)
-                        {
-                            var path = Path.Combine(Server.MapPath("~/uploadeimg"));
-                            string pathstring = Path.Combine(path.ToString());
-                            string filename1 = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                            bool isexist = Directory.Exists(pathstring);
-                            if (!isexist)
-                            {
-                                Directory.CreateDirectory(pathstring);
-                            }
-                            string uploadpath = string.Format("{0}\\{1}", pathstring, filename1);
-                            file.SaveAs(uploadpath);
-                        }
-                    }
-                }
 
-                catch (Exception)
-                {
-                    isSavedSuccessfully = false;
-                }
-                if (isSavedSuccessfully)
-                {
-                    return Json(new
-
+                    using (MemoryStream stream = new MemoryStream())
                     {
-                        Message = fname
-                    });
-                }
-                else
-                {
-                    return Json(new
-                    {
-                        Message = "Error in Saving file"
-                    });
+                        await item.CopyToAsync(stream);
+                        
+                    }                    
                 }
             }
-        */
-        #endregion
+
+            return View( "Inxex");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            try
+            {
+                if (file.Length > 0)
+                {
+                    string folderRoot = Path.Combine(_environment.ContentRootPath, "Uploads");
+                    string filePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    filePath = Path.Combine(folderRoot, filePath);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+                return Ok(new { success = true, message = "File Uploaded" });
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { success = false, message = "Error file failed to upload" });
+            }
+        }
+
+            #region DropZone
+            /*
+
+                public ActionResult uploade()
+
+                {
+                    bool isSavedSuccessfully = true;
+                    string fname = "";
+                    try
+                    {
+                        foreach (string filename in Request.Files)
+                        {
+                            HttpPostedFileBase file = Request.Files[filename];
+                            fname = file.FileName;
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                var path = Path.Combine(Server.MapPath("~/uploadeimg"));
+                                string pathstring = Path.Combine(path.ToString());
+                                string filename1 = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                                bool isexist = Directory.Exists(pathstring);
+                                if (!isexist)
+                                {
+                                    Directory.CreateDirectory(pathstring);
+                                }
+                                string uploadpath = string.Format("{0}\\{1}", pathstring, filename1);
+                                file.SaveAs(uploadpath);
+                            }
+                        }
+                    }
+
+                    catch (Exception)
+                    {
+                        isSavedSuccessfully = false;
+                    }
+                    if (isSavedSuccessfully)
+                    {
+                        return Json(new
+
+                        {
+                            Message = fname
+                        });
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            Message = "Error in Saving file"
+                        });
+                    }
+                }
+            */
+            #endregion
+        }
     }
-}

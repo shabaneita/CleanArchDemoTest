@@ -143,7 +143,7 @@ namespace CleanArch.Mvc.Controllers
 
 
         [HttpGet]
-          public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
             var category = _categoryService.GetCategoryDetails(id);
             var model = new CategoryViewModel
@@ -158,7 +158,7 @@ namespace CleanArch.Mvc.Controllers
 
 
         // POST: Categories/Delete/5
-   
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
@@ -167,6 +167,8 @@ namespace CleanArch.Mvc.Controllers
             _categoryService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+
+        #region getProductOfCategory
 
         //[HttpGet]
         //public async Task<IActionResult> getProductOfCategory(int id)
@@ -181,6 +183,22 @@ namespace CleanArch.Mvc.Controllers
         //    return View(products);
 
         //}
+
+        #endregion
+
+
+
+
+
+
+
+
+
+        public IActionResult AddImage(int id) 
+        {
+            var model = _categoryService.GetCategoryDetails(id);
+            return View(model);
+        }
 
 
     }

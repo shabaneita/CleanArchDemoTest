@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="dropzone" Version="4.3.0" />
-    <PackageReference Include="DropzoneMvc" Version="1.5.0" />
     <PackageReference Include="Grpc.Core" Version="2.38.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.3.0" />

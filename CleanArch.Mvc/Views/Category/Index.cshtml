@@ -61,13 +61,14 @@
                     <a asp-action="/home">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>|
-                    <a asp-controller="products" asp-action="ProCat" asp-route-id="@item.CategoryId">All Product In This Category </a>|
+                    <a asp-action="Edit" class="btn btn-info" asp-route-id="@item.CategoryId">Edit</a> |
+                    <a asp-action="AddImage" class="btn btn-info" asp-route-id="@item.CategoryId">Add Image</a> |
+                    <a asp-action="Details" class="btn btn-success" asp-route-id="@item.CategoryId">Details</a> |
+                    <a asp-action="Delete" class="btn btn-secondary" asp-route-id="@item.CategoryId">Delete</a>|
+                    <a asp-controller="products" class="btn btn-danger" asp-action="ProCat" asp-route-id="@item.CategoryId">All Product In This Category </a>|
 
                     @* Categories/Details/3
-                        //https://localhost:44301/Products/ProCat/4*@
+        //https://localhost:44301/Products/ProCat/4*@
 
                 </td>
             </tr>

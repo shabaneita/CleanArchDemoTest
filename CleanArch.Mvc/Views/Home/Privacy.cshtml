@@ -1,6 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
+﻿@{ ViewData["Title"] = "Privacy Policy"; }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+
+
+
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div id="dropzone">
+            <form action="/Home/Upload" class="dropzone needsclick dz-clickable" id="uploader">
+                <div class="dz-message needsclick">
+                    Drop files here or click to upload.<br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<h1>Upload</h1>
+
+<h2>Drag & Drop file upload </h2>
+
+<div class="row">
+    @using (Html.BeginForm("UploadFile", "Home",
+                        FormMethod.Post,
+                        new
+                        {
+                            @class = "dropzone",
+                            id = "dropzone-form",
+                        }))
+    {
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+		Dropzone.options.dropzoneForm = {
+			paramName: "file",
+			maxFilesize: 20,
+			maxFiles: 4,
+			acceptedFiles: "image/*",
+			dictMaxFilesExceeded: "Custom max files msg",
+		};
+    </script>
+}
